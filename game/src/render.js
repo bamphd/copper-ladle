@@ -183,6 +183,143 @@ function drawCounter(ctx, st, label) {
   text(ctx, label, st.x + st.w / 2, st.y + st.h - 14, 12, 'rgba(255,255,255,0.85)', 800);
 }
 
+/** Bottom counter run along the south wall — decor only, no gameplay:
+ *  sink with taps, spice rack, prep board, stacked copper pots. */
+function drawSouthCounter(ctx) {
+  const x0 = 120, y0 = 652, w = 1136, h = 56;
+  ctx.fillStyle = P.counterSide;
+  rr(ctx, x0, y0, w, h, 8);
+  ctx.fill();
+  ctx.fillStyle = P.counterTop;
+  rr(ctx, x0, y0, w, 26, 8);
+  ctx.fill();
+  ctx.fillStyle = P.counterEdge;
+  ctx.fillRect(x0, y0 + 22, w, 4);
+  // Section dividers.
+  ctx.fillStyle = 'rgba(0,0,0,0.18)';
+  for (const dx of [340, 700, 980]) ctx.fillRect(x0 + dx, y0 + 26, 3, h - 26);
+
+  // Sink: steel basin inset in the counter top, gooseneck tap above it.
+  ctx.fillStyle = '#7d8891';
+  rr(ctx, 182, 654, 146, 22, 6);
+  ctx.fill();
+  ctx.fillStyle = '#aeb8bf';
+  rr(ctx, 188, 657, 134, 16, 5);
+  ctx.fill();
+  ctx.fillStyle = '#8fa8c8';
+  ctx.beginPath(); ctx.ellipse(255, 665, 52, 6, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#5d6a72';
+  ctx.lineWidth = 5;
+  ctx.beginPath(); ctx.moveTo(255, 656); ctx.lineTo(255, 636); ctx.lineTo(283, 636); ctx.lineTo(283, 645); ctx.stroke();
+  ctx.fillStyle = P.copper;
+  ctx.beginPath(); ctx.arc(232, 654, 5, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(278, 654, 5, 0, Math.PI * 2); ctx.fill();
+  // Clean plates stacked beside the sink.
+  ctx.fillStyle = '#fdfbf4';
+  for (let i = 0; i < 3; i += 1) {
+    ctx.beginPath(); ctx.ellipse(392, 672 - i * 5, 26, 6, 0, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.strokeStyle = '#c9b98f';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.ellipse(392, 662, 26, 6, 0, 0, Math.PI * 2); ctx.stroke();
+
+  // Spice rack: back plank with five little jars.
+  ctx.fillStyle = '#6e4525';
+  ctx.fillRect(500, 644, 300, 8);
+  const jarCols = ['#d94f3d', '#5da24a', '#e8b23a', '#8a5a3b', '#f2e3c2'];
+  jarCols.forEach((col, i) => {
+    const jx = 522 + i * 58;
+    ctx.fillStyle = 'rgba(251,243,223,0.85)';
+    rr(ctx, jx, 618, 34, 26, 4);
+    ctx.fill();
+    ctx.fillStyle = col;
+    rr(ctx, jx + 4, 630, 26, 14, 3);
+    ctx.fill();
+    ctx.fillStyle = '#8a5a33';
+    rr(ctx, jx + 2, 614, 30, 6, 3);
+    ctx.fill();
+  });
+
+  // Prep board: cutting board with chopped bits, a knife, whole veg beside it.
+  ctx.fillStyle = '#e8d9b0';
+  rr(ctx, 860, 640, 150, 34, 6);
+  ctx.fill();
+  ctx.strokeStyle = '#b89a68';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  ctx.fillStyle = '#d94f3d';
+  ctx.beginPath(); ctx.ellipse(905, 656, 9, 5, 0.4, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(925, 666, 8, 5, -0.3, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#b678c2';
+  ctx.beginPath(); ctx.arc(955, 660, 7, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#e3c4ea';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(955, 660, 3.5, 0, Math.PI * 2); ctx.stroke();
+  ctx.fillStyle = '#5da24a';
+  ctx.beginPath(); ctx.ellipse(985, 668, 8, 4, 0.5, 0, Math.PI * 2); ctx.fill();
+  // Knife lying across the board's corner.
+  ctx.save();
+  ctx.translate(948, 650);
+  ctx.rotate(0.5);
+  ctx.fillStyle = '#c8ccd0';
+  ctx.fillRect(0, -3, 26, 6);
+  ctx.fillStyle = '#5d341f';
+  ctx.fillRect(-14, -3, 14, 6);
+  ctx.restore();
+  drawFood(ctx, 'tomato', 1046, 652, 26, 'raw');
+  drawFood(ctx, 'onion', 1078, 664, 26, 'raw');
+
+  // Stacked copper pots + a ladle leaning on the end.
+  ctx.fillStyle = P.copperDark;
+  rr(ctx, 1140, 648, 96, 24, 6);
+  ctx.fill();
+  ctx.fillStyle = P.copper;
+  rr(ctx, 1148, 630, 80, 22, 6);
+  ctx.fill();
+  ctx.fillStyle = '#5d341f';
+  ctx.beginPath(); ctx.arc(1188, 630, 24, Math.PI, 0); ctx.fill();
+  ctx.strokeStyle = '#8a5a33';
+  ctx.lineWidth = 4;
+  ctx.beginPath(); ctx.moveTo(1236, 626); ctx.lineTo(1250, 664); ctx.stroke();
+  ctx.fillStyle = P.copper;
+  ctx.beginPath(); ctx.arc(1251, 666, 6, 0, Math.PI * 2); ctx.fill();
+}
+
+/** Floor-level props in the open middle band: a veg crate and a herb pot. */
+function drawFloorProps(ctx) {
+  // Wooden crate of vegetables, bottom-left of the rug.
+  ctx.fillStyle = '#8a5a33';
+  rr(ctx, 118, 470, 78, 52, 6);
+  ctx.fill();
+  ctx.fillStyle = '#6e4525';
+  ctx.fillRect(118, 492, 78, 4);
+  ctx.fillRect(152, 470, 4, 52);
+  ctx.fillStyle = '#d94f3d';
+  ctx.beginPath(); ctx.arc(140, 466, 11, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(172, 462, 10, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#5da24a';
+  ctx.beginPath(); ctx.arc(156, 468, 9, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#4c9a6d';
+  ctx.beginPath(); ctx.ellipse(156, 460, 6, 3, -0.5, 0, Math.PI * 2); ctx.fill();
+
+  // Potted herb plant, bottom-right — clear of the serve flash text.
+  ctx.fillStyle = '#b65a2e';
+  ctx.beginPath(); ctx.moveTo(1128, 516); ctx.lineTo(1172, 516); ctx.lineTo(1166, 548); ctx.lineTo(1134, 548); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#8a3f1d';
+  ctx.fillRect(1126, 512, 48, 7);
+  ctx.strokeStyle = '#2f6b4f';
+  ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(1150, 514); ctx.lineTo(1150, 492); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(1150, 500); ctx.lineTo(1138, 488); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(1150, 500); ctx.lineTo(1162, 488); ctx.stroke();
+  ctx.fillStyle = '#4c9a6d';
+  ctx.beginPath(); ctx.arc(1150, 486, 11, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(1136, 494, 9, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(1164, 494, 9, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#5da24a';
+  ctx.beginPath(); ctx.arc(1150, 496, 8, 0, Math.PI * 2); ctx.fill();
+}
+
 export function drawKitchen(ctx, kitchen, board, now) {
   const k = kitchen;
   ctx.save();
@@ -191,15 +328,39 @@ export function drawKitchen(ctx, kitchen, board, now) {
     const s = k.trauma * k.trauma * 7;
     ctx.translate((Math.random() * 2 - 1) * s, (Math.random() * 2 - 1) * s);
   }
-  // Floor: warm checker tiles.
+  // Floor: warm checker tiles with deterministic per-tile tint variation,
+  // so it reads as worn kitchen tile, not a flat checkerboard.
   const tile = 64;
+  const tileHash = (tx, ty) => {
+    let h = (tx * 73856093) ^ (ty * 19349663);
+    h = (h ^ (h >> 13)) >>> 0;
+    return h % 100;
+  };
   for (let ty = 0; ty < 12; ty += 1) {
     for (let tx = 0; tx < 20; tx += 1) {
       ctx.fillStyle = (tx + ty) % 2 === 0 ? P.floorA : P.floorB;
       ctx.fillRect(tx * tile, 156 + ty * tile, tile, tile);
+      const v = tileHash(tx, ty);
+      if (v < 14) {
+        ctx.fillStyle = 'rgba(255,246,220,0.10)';
+        ctx.fillRect(tx * tile, 156 + ty * tile, tile, tile);
+      } else if (v < 28) {
+        ctx.fillStyle = 'rgba(122,74,26,0.07)';
+        ctx.fillRect(tx * tile, 156 + ty * tile, tile, tile);
+      } else if (v === 97) {
+        // Rare accent tile: a faint copper diamond inlay.
+        ctx.fillStyle = 'rgba(201,111,46,0.20)';
+        ctx.beginPath();
+        ctx.moveTo(tx * tile + 32, 156 + ty * tile + 14);
+        ctx.lineTo(tx * tile + 50, 156 + ty * tile + 32);
+        ctx.lineTo(tx * tile + 32, 156 + ty * tile + 50);
+        ctx.lineTo(tx * tile + 14, 156 + ty * tile + 32);
+        ctx.closePath();
+        ctx.fill();
+      }
     }
   }
-  ctx.fillStyle = 'rgba(0,0,0,0.05)';
+  ctx.fillStyle = 'rgba(0,0,0,0.07)';
   for (let ty = 0; ty < 12; ty += 1) ctx.fillRect(0, 156 + ty * tile, W, 2);
   for (let tx = 0; tx < 20; tx += 1) ctx.fillRect(tx * tile, 156, 2, H - 156);
 
@@ -218,6 +379,29 @@ export function drawKitchen(ctx, kitchen, board, now) {
     ctx.fillStyle = P.copper;
     ctx.fillRect(px - 2, 160, 4, 6);
   }
+  // Hanging herb bundle, left of the title.
+  ctx.strokeStyle = '#d9b96a';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(252, 158); ctx.lineTo(252, 168); ctx.stroke();
+  ctx.fillStyle = '#2f6b4f';
+  ctx.beginPath(); ctx.ellipse(244, 176, 6, 9, -0.4, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(260, 176, 6, 9, 0.4, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#4c9a6d';
+  ctx.beginPath(); ctx.ellipse(252, 178, 6, 9, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#fbf3df';
+  ctx.beginPath(); ctx.arc(252, 186, 4, 0, Math.PI * 2); ctx.fill();
+  // Plate shelf, right of the title: three plates standing on a plank.
+  ctx.fillStyle = '#5d341f';
+  ctx.fillRect(1000, 184, 118, 5);
+  for (const [i, px] of [1018, 1052, 1086].entries()) {
+    ctx.fillStyle = '#fdfbf4';
+    ctx.beginPath(); ctx.arc(px, 174, 11, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#c9b98f';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = i === 1 ? P.copper : '#e8b23a';
+    ctx.beginPath(); ctx.arc(px, 174, 4, 0, Math.PI * 2); ctx.fill();
+  }
 
   // A woven rug in the middle of the floor — the chef walks over it, as one does.
   ctx.fillStyle = '#c96f2e';
@@ -229,6 +413,10 @@ export function drawKitchen(ctx, kitchen, board, now) {
   ctx.beginPath(); ctx.ellipse(640, 560, 132, 38, 0, 0, Math.PI * 2); ctx.stroke();
   ctx.fillStyle = '#f7e3c2';
   ctx.beginPath(); ctx.ellipse(640, 560, 26, 10, 0, 0, Math.PI * 2); ctx.fill();
+
+  // South counter run + floor props: decor only, filling the bottom band.
+  drawSouthCounter(ctx);
+  drawFloorProps(ctx);
 
   // Pantry crates.
   drawCounter(ctx, STATIONS.pantry, 'PANTRY — pick an ingredient');
